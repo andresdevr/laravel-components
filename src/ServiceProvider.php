@@ -62,9 +62,9 @@ class ServiceProvider extends LaravelServiceProvider
      */
     protected function bootRoutes()
     {
-        Route::name($this->app->config['laravel-components.route.name'])
-            ->middleware($this->app->config['laravel-components.route.middlewares'])
-            ->prefix($this->app->config['laravel-components.route.prefix'])
+        Route::name($this->app->config['laravel-components.asset-route.name'])
+            ->middleware($this->app->config['laravel-components.asset-route.middlewares'])
+            ->prefix($this->app->config['laravel-components.asset-route.prefix'])
             ->group(fn () => $this->loadRoutesFrom(__DIR__ . '/../routes/web.php'));
     }
 
