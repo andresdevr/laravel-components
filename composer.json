@@ -1,0 +1,32 @@
+{
+    "name": "andresdevr/laravel-components",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Andresdevr\\LaravelComponents\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "andresdevr",
+            "email": "andres22.dev@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "illuminate/view": "^9.1"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.4"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Andresdevr\\LaravelComponents\\ServiceProvider"
+            ]
+        },
+        "aliases": {
+
+        }
+    }
+}
