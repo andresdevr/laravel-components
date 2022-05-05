@@ -14,7 +14,7 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'laravel-components');
+        $this->registerConfig();
     }
     
     /**
@@ -25,16 +25,56 @@ class ServiceProvider extends LaravelServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-
-            $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('laravel-components.php'),
-            ], 'config');
-
+            $this->publishConfig();
         }
 
+        $this->bootRoutes();
+        $this->bootViews();
+    }
+
+
+    /**
+     * Load the config
+     * 
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'laravel-components');
+    }
+
+    /**
+     * Publish method
+     * 
+     * @return void
+     */
+    protected function publishConfig()
+    {
+        $this->publishes([
+            __DIR__ . '/../config/config.php' => config_path('laravel-components.php'),
+        ], 'config');
+    }
+
+    /**
+     * Load the routes
+     * 
+     * @return void
+     */
+    protected function bootRoutes()
+    {
         Route::name($this->app->config['laravel-components.route.name'])
-                ->middleware($this->app->config['laravel-components.route.middlewares'])
-                ->prefix($this->app->config['laravel-components.route.prefix'])
-                ->group(fn () => $this->loadRoutesFrom(__DIR__ . '/../routes/web.php'));
+            ->middleware($this->app->config['laravel-components.route.middlewares'])
+            ->prefix($this->app->config['laravel-components.route.prefix'])
+            ->group(fn () => $this->loadRoutesFrom(__DIR__ . '/../routes/web.php'));
+    }
+
+    /**
+     * Load the views
+     * 
+     * @return void
+     */
+    protected function bootViews()
+    {
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-components');
     }
 }

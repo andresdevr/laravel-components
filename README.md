@@ -1,4 +1,4 @@
-# Foobar
+# Laravel Components
 
 
 ## Installation
