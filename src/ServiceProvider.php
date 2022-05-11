@@ -78,7 +78,7 @@ class ServiceProvider extends LaravelServiceProvider
     protected function publishAssets()
     {
         $this->publishes([
-            __DIR__.'/../resources/assets' => resource_path('laravel-components'),
+            __DIR__.'/../dist' => public_path($this->app->config['laravel-components.public-folder']),
         ], 'laravel-components-assets');
     }
 
