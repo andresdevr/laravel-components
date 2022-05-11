@@ -26,6 +26,8 @@ class ServiceProvider extends LaravelServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishConfig();
+            $this->publishViews();
+            $this->publishAssets();
         }
 
         $this->bootRoutes();
@@ -44,7 +46,7 @@ class ServiceProvider extends LaravelServiceProvider
     }
 
     /**
-     * Publish method
+     * Publish method for config
      * 
      * @return void
      */
@@ -53,6 +55,31 @@ class ServiceProvider extends LaravelServiceProvider
         $this->publishes([
             __DIR__ . '/../config/config.php' => config_path('laravel-components.php'),
         ], 'config');
+    }
+
+    /**
+     * Publish method for views
+     * 
+     * @return void
+     */
+    protected function publishViews()
+    {
+        $this->publishes([
+            __DIR__.'/../src/View/Components/' => app_path('View/Components'),
+            __DIR__.'/../resources/views/components/' => resource_path('views/vendor/components'),
+        ], 'view-components');
+    }
+
+    /**
+     * Publish the assets
+     * 
+     * @return void
+     */
+    protected function publishAssets()
+    {
+        $this->publishes([
+            __DIR__.'/../resources/assets' => resource_path('laravel-components'),
+        ], 'assets');
     }
 
     /**

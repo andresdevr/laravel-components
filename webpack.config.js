@@ -15,7 +15,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     entry: {
-        alpine: path.resolve(__dirname, 'assets/alpine.ts'),
+        alpinejs: path.resolve(__dirname, 'resources/assets/alpinejs.ts'),
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
