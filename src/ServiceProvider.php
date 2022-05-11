@@ -28,9 +28,9 @@ class ServiceProvider extends LaravelServiceProvider
             $this->publishConfig();
             $this->publishViews();
             $this->publishAssets();
+            $this->bootCommands();
         }
 
-        $this->bootRoutes();
         $this->bootViews();
     }
 
@@ -54,7 +54,7 @@ class ServiceProvider extends LaravelServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../config/config.php' => config_path('laravel-components.php'),
-        ], 'config');
+        ], 'laravel-components-config');
     }
 
     /**
@@ -67,7 +67,7 @@ class ServiceProvider extends LaravelServiceProvider
         $this->publishes([
             __DIR__.'/../src/View/Components/' => app_path('View/Components'),
             __DIR__.'/../resources/views/components/' => resource_path('views/vendor/components'),
-        ], 'view-components');
+        ], 'laravel-components-view-components');
     }
 
     /**
@@ -79,21 +79,9 @@ class ServiceProvider extends LaravelServiceProvider
     {
         $this->publishes([
             __DIR__.'/../resources/assets' => resource_path('laravel-components'),
-        ], 'assets');
+        ], 'laravel-components-assets');
     }
 
-    /**
-     * Load the routes
-     * 
-     * @return void
-     */
-    protected function bootRoutes()
-    {
-        Route::name($this->app->config['laravel-components.asset-route.name'])
-            ->middleware($this->app->config['laravel-components.asset-route.middlewares'])
-            ->prefix($this->app->config['laravel-components.asset-route.prefix'])
-            ->group(fn () => $this->loadRoutesFrom(__DIR__ . '/../routes/web.php'));
-    }
 
     /**
      * Load the views
@@ -103,5 +91,17 @@ class ServiceProvider extends LaravelServiceProvider
     protected function bootViews()
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-components');
+    }
+
+    /**
+     * Load the comands
+     * 
+     * @return void
+     */
+    public function bootCommands()
+    {
+        $this->commands(
+            $this->app->config['laravel-components.commands']
+        );
     }
 }
